@@ -5,6 +5,7 @@ import Home from './Components/Home/Home';
 import LogIn from './Components/LogIn/LogIn';
 import NotFound from './Components/NotFound/NotFound';
 import Register from './Components/Register/Register';
+import useFirebase from './Hooks/useFirebase';
 
 function App() {
   return (
