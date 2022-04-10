@@ -1,11 +1,19 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import useFirebase from "../../Hooks/useFirebase";
-
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {useSignInWithGoogle} from 'react-firebase-hooks/auth'
+import auth from '../../Firebase.init/firebase.init'
 const LogIn = () => {
-  const { signInWithGoogle, user } = useFirebase();
-  const navigate = useNavigate();
-  user.uid && navigate("/");
+  const [signInWithGoogle,user] = useSignInWithGoogle(auth)
+  const location = useLocation();
+  // console.log(location)
+  const from = location?.state?.from?.pathname || '/'
+  const navigate = useNavigate()
+  const googleAuthSignIn = () => {
+    signInWithGoogle()
+    .then(() => {
+      navigate(from,{replace: true});
+    })
+  }
   return (
     <div className="flex justify-center items-center my-20">
       <div className="bg-stone-700 p-20 rounded-md">
@@ -62,7 +70,7 @@ const LogIn = () => {
         </form>
         <div className="flex justify-center mt-10">
           <button
-            onClick={signInWithGoogle}
+            onClick={googleAuthSignIn}
             className="bg-red-500 px-10 py-2 text-xl text-white rounded-lg"
           >
             Continue with Google

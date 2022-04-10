@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import auth from "../Firebase.init/firebase.init";
 import { useNavigate } from "react-router-dom";
+
 const googleProvider = new GoogleAuthProvider();
 const useFirebase = () => {
   const navigate = useNavigate()
@@ -17,6 +18,7 @@ const useFirebase = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setUser(result.user);
+        navigate('/')
       })
       .catch((error) => {
         setError(error.message);
